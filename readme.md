@@ -57,5 +57,5 @@ L'application Yelema Immo sera développée en utilisant les technologies suivan
 3. **Lancer le Serveur de Développement**
    ```bash npx tailwindcss -i ./static/src/input.css -o ./static/src/output.css --watch
    python manage.py runserver
-# facturation-1.1
+# YelemaImmoDemo-1.1
 #BY SIDI MOHAMED ALKAIROU MAIGA
