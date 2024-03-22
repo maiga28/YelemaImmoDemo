@@ -1,0 +1,102 @@
+{% load compress %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UAIcon 03
+    Acme Professional
+    Sales
+    $9,962
+    +29%
+    Direct VS Indirect
+    
+    Real Time Value
+    -Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta charset="utf-8">
+    <meta name="robots" content="max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+    <link rel="canonical" href="https://preline.co/">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="This is a simple application layout with header only example using Tailwind CSS.">
+  
+    <meta name="twitter:site" content="@preline">
+    <meta name="twitter:creator" content="@htmlstream">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Dark Application Layout Navbar/Header using Tailwind CSS | Preline UI, crafted with Tailwind CSS">
+    <meta name="twitter:description" content="This is a simple application layout with header only example using Tailwind CSS.">
+    <meta name="twitter:imIcon 03
+    Acme Professional
+    Sales
+    $9,962
+    +29%
+    Direct VS Indirect
+    
+    Real Time Value
+    age" content="../../assets/img/og-image.png">
+  
+    <meta property="og:url" content="https://preline.co/">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Preline">
+    <meta property="og:title" content="Dark Application Layout Navbar/Header using Tailwind CSS | Preline UI, crafted with Tailwind CSS">
+    <meta property="og:description" content="This is a simple application layout with header only example using Tailwind CSS.">
+    <meta property="og:image" content="../../assets/img/og-image.png">
+  
+    <!-- Title -->
+    <title>Yelema | Immob </title>
+  
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="../../favicon.ico">
+  
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+    <!-- Link your Tailwind CSS file -->
+    <link rel="stylesheet" href="{% static 'src/css/style.css' %}">
+    <link href="{% static 'src/css/vendors/flatpickr.min.css' %}">
+    <link href="{% static 'src/js/vendors/alpinejs.min.js' %}">
+    <link href="{% static 'src/js/main.js' %}">
+
+    {% compress css %}
+
+    <link rel="stylesheet" href="{% static 'src/output.css' %}">
+    <link rel="stylesheet" href="{% static 'src/input.css' %}">
+    <link rel="stylesheet" href="{% static 'src/style.css' %}">
+  
+    {% endcompress %}
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="node_modules/preline/dist/preline.js"></script>
+
+    <script>
+        if (localStorage.getItem('dark-mode') === 'false' || !('dark-mode' in localStorage)) {
+            document.querySelector('html').classList.remove('dark');
+            document.querySelector('html').style.colorScheme = 'light';
+        } else {
+            document.querySelector('html').classList.add('dark');
+            document.querySelector('html').style.colorScheme = 'dark';
+        }
+    </script> 
+    
+</head>
+    <body class="bg-gray-50">
+
+        <div class="container mx-auto mt-4">
+        {% block content %}
+
+
+        {% endblock content %}
+    </div>
+
+    <script src="{% static 'src/js/vendors/alpinejs.min.js' %}" defer=""></script>
+    <script src="{% static 'src/js/main.js' %}"></script>
+    <script src="{% static 'src/js/flatpickr-init.js' %}"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+    <script src="./node_modules/preline/dist/preline.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.0.0/flowbite.min.js"></script>
+</body>
+</html>

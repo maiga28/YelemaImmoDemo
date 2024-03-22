@@ -1,0 +1,79 @@
+{% extends "_base_account.html" %}
+{% load allauth i18n socialaccount %}
+
+{% block head_title %}
+    {% trans "Signup" %}
+{% endblock head_title %}
+
+{% block content %}
+    <div class="flex c4ijw">
+        <!-- Content -->
+        <div class="c52db c3ff8">
+            <div class="flex cbz56 cfwm1 chmlm crszu">
+                <!-- Header -->
+                <div class="cy6kd">
+                    <div class="flex items-center cmgwo clpyc cj3hv ciqso c9r0z">
+                        <!-- Logo -->
+                        <a class="block" href="index-2.html">
+                            <svg width="32" height="32" viewBox="0 0 32 32">
+                                <!-- SVG content -->
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="ciiqv cofxq c3ff8 c9r0z c0ycj">
+                    <h1 class="text-3xl text-slate-800 dark:text-slate-100 font-bold crkc7">Create your Account ✨</h1>
+                    <!-- Your Form -->
+                    <form method="POST" action="{% url 'account_signup' %}">
+                        {% csrf_token %}
+                        <div class="cxebx">
+                            <div>
+                                <label class="block text-sm cw92y ci4cg" for="id_email">{% trans "Email Address" %} <span class="c6tg6">*</span></label>
+                                <input id="id_email" class="c03gb c3ff8" type="email" name="email">
+                            </div>
+                            <div>
+                                <label class="block text-sm cw92y ci4cg" for="id_full_name">{% trans "Full Name" %} <span class="c6tg6">*</span></label>
+                                <input id="id_full_name" class="c03gb c3ff8" type="text" name="full_name">
+                            </div>
+                            <div>
+                                <label class="block text-sm cw92y ci4cg" for="id_role">{% trans "Your Role" %} <span class="c6tg6">*</span></label>
+                                <select id="id_role" class="cy9mt c3ff8" name="role">
+                                    <option value="designer">{% trans "Designer" %}</option>
+                                    <option value="developer">{% trans "Developer" %}</option>
+                                    <option value="accountant">{% trans "Accountant" %}</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm cw92y ci4cg" for="id_password">{% trans "Password" %}</label>
+                                <input id="id_password" class="c03gb c3ff8" type="password" name="password">
+                            </div>
+                        </div>
+                        <div class="flex items-center cmgwo cro1p">
+                            <div class="mr-1">
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="cybz1">
+                                    <span class="text-sm c9o7o">{% trans "Email me about product news." %}</span>
+                                </label>
+                            </div>
+                            <button type="submit" class="btn ml-3 cfeqx c626f cf1ce ceqwg">{% trans "Sign Up" %}</button>
+                        </div>
+                    </form>
+                    <!-- Footer -->
+                    
+                    <div class="border-slate-200 dark:border-slate-700 c87xd cro1p cc5dk">
+                        <div class="text-sm">
+                            {% trans "Have an account?" %} <a class="text-indigo-500 cuv1l cdi3j cw92y" href="{% url 'account_login' %}">{% trans "Sign In" %}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Image -->
+        <div class="hidden c52db c108j csmh2 csp9v cke32 cvqv9" aria-hidden="true">
+            <img class="cq1k0 cbq5m crszu c3ff8" src="{% static 'src/images/auth-image.jpg' %}" width="760" height="1024" alt="Authentication image">
+            <img class="hidden c50r7 co267 csmh2 c5q74 c76e0 c05s4" src="{% static 'src/images/auth-decoration.png' %}" width="218" height="224" alt="Authentication decoration">
+        </div>
+    </div>
+{% endblock %}
+
+
