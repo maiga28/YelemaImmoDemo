@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.facebook',
     'crispy_forms',
     'main_apps.settings',
+    'main_apps.profiles',
 ]
 
 MIDDLEWARE = [
@@ -200,3 +201,4 @@ EMAIL_HOST_USER = 'tdjangosite@gmail.com'
 EMAIL_HOST_PASSWORD = 'qhhb xfdd dbhb zemx '
 
 LOGIN_REDIRECT_URL = '/gestion/'
+# AUTH_USER_MODEL = 'profiles.Profile'

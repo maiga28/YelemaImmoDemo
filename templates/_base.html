@@ -20,7 +20,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Dark Application Layout Navbar/Header using Tailwind CSS | Preline UI, crafted with Tailwind CSS">
     <meta name="twitter:description" content="This is a simple application layout with header only example using Tailwind CSS.">
-    <meta name="twitter:image" content="../../assets/img/og-image.png">
+    <meta name="twitter:image" content="{% static 'src/img/og-image.png'%}%">
   
     <meta property="og:url" content="https://preline.co/">
     <meta property="og:locale" content="en_US">
@@ -28,7 +28,7 @@
     <meta property="og:site_name" content="Preline">
     <meta property="og:title" content="Dark Application Layout Navbar/Header using Tailwind CSS | Preline UI, crafted with Tailwind CSS">
     <meta property="og:description" content="This is a simple application layout with header only example using Tailwind CSS.">
-    <meta property="og:image" content="../../assets/img/og-image.png">
+    <meta property="og:image" content="{% static 'src/img/og-image.png'%}">
   
     <!-- Title -->
     <title>Yelema | Immob </title>
@@ -84,7 +84,7 @@
                 <div class="clpyc cj3hv c9r0z">
                     <div class="flex items-center cmgwo c2643 ciqso">
 
-                        <!-- Header: Left side -->
+                        {% comment %} <!-- Header: Left side -->
                         <div class="flex">
                             <!-- Hamburger button -->
                             <button class="text-slate-500 cxc4n caqfm" @click.stop="sidebarOpen = !sidebarOpen" aria-controls="sidebar" :aria-expanded="sidebarOpen">
@@ -96,7 +96,7 @@
                                 </svg>
                             </button>
 
-                        </div>
+                        </div> {% endcomment %}
 
                         <!-- Header: Right side -->
                         <div class="flex items-center cb7d8">
@@ -162,7 +162,7 @@
                                                         <a class="flex items-center text-slate-800 dark:text-slate-100 rounded cx1ew c1hrc c2djl cnk1n" href="#0" @click="searchOpen = false" @focus="searchOpen = true" @focusout="searchOpen = false">
                                                             <svg class="clw26 csxt0 ciz4v czgoy c3wll c7n6y czt1n cgmrc cm474" viewBox="0 0 16 16">
                                                                 <path d="M15.707 14.293v.001a1 1 0 01-1.414 1.414L11.185 12.6A6.935 6.935 0 017 14a7.016 7.016 0 01-5.173-2.308l-1.537 1.3L0 8l4.873 1.12-1.521 1.285a4.971 4.971 0 008.59-2.835l1.979.454a6.971 6.971 0 01-1.321 3.157l3.107 3.112zM14 6L9.127 4.88l1.521-1.28a4.971 4.971 0 00-8.59 2.83L.084 5.976a6.977 6.977 0 0112.089-3.668l1.537-1.3L14 6z"></path>
-                                                            </svg>
+                                                            </svg>../../assets/
                                                             <span>Master Digital Marketing Strategy course</span>
                                                         </a>
                                                     </li>
@@ -210,7 +210,7 @@
                                     </div>
                                 </div>                    
                             </div>
-
+                            {{user.username}}
                             <!-- Notifications button -->
                             <div class="inline-flex c4ijw" x-data="{ open: false }">
                                 <button class="flex items-center justify-center rounded-full cu2ps cefxi ce4zx c6vqo chmgx c6dxj" :class="{ 'cr58u': open }" aria-haspopup="true" @click.prevent="open = !open" :aria-expanded="open">
@@ -270,7 +270,7 @@
                                             <a class="text-sm text-indigo-500 flex items-center cuv1l cdi3j cw92y cjm6w cynm4" href="#0" @click="open = false" @focus="open = true" @focusout="open = false">
                                                 <svg class="w-3 h-3 text-indigo-300 mr-2 cyx9j c3wll c7n6y" viewBox="0 0 12 12">
                                                     <path d="M10.5 0h-9A1.5 1.5 0 000 1.5v9A1.5 1.5 0 001.5 12h9a1.5 1.5 0 001.5-1.5v-9A1.5 1.5 0 0010.5 0zM10 7L8.207 5.207l-3 3-1.414-1.414 3-3L5 2h5v5z"></path>
-                                                </svg>
+                                                </svg>{{user.username}}
                                                 <span>Support Site</span>
                                             </a>
                                         </li>
@@ -308,9 +308,9 @@
                             <!-- User button -->
                             <div class="inline-flex c4ijw" x-data="{ open: false }">
                                 <button class="inline-flex justify-center items-center c2djl" aria-haspopup="true" @click.prevent="open = !open" :aria-expanded="open">
-                                    <img class="rounded-full chmgx c6dxj" src="images/user-avatar-32.png" width="32" height="32" alt="User">
+                                    <img class="rounded-full chmgx c6dxj" src="{% static 'src/images/user-avatar-32.png' %}" width="32" height="32" alt="User">
                                     <div class="flex items-center c32al">
-                                        <span class="text-sm cyefr c0vsa ch1ih cw92y c32al c9o7o">Acme Inc.</span>
+                                        <span class="text-sm cyefr c0vsa ch1ih cw92y c32al c9o7o">{{user.username}}</span>
                                         <svg class="w-3 h-3 czgoy c3wll c7n6y csib2" viewBox="0 0 12 12">
                                             <path d="M5.9 11.4L.5 6l1.4-1.4 4 4 4-4L11.3 6z"></path>
                                         </svg>
@@ -318,7 +318,9 @@
                                 </button>
                                 <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded creyy ct1ew cetne csmh2 c8gb2 c28cu cke32 c8407 cox8h c5xk8" @click.outside="open = false" @keydown.escape.window="open = false" x-show="open" x-transition:enter="c5mjj coq4n ch8aq ccio3" x-transition:enter-start="opacity-0 c3pue" x-transition:enter-end="cqsra cfwq4" x-transition:leave="c5mjj coq4n ch8aq" x-transition:leave-start="cqsra" x-transition:leave-end="opacity-0" x-cloak="">
                                     <div class="border-slate-200 dark:border-slate-700 cz4zt cf6al ci4cg cjm6w c622v">
-                                        <div class="text-slate-800 dark:text-slate-100 cw92y">Acme Inc.</div>
+                                        <div class="flex items-center c32al">
+                                            <span class="text-sm cyefr c0vsa ch1ih cw92y c32al c9o7o">{{user.username}}</span>
+                                        </div>
                                         <div class="text-slate-500 dark:text-slate-400 c0qeg clmtf">Administrator</div>
                                     </div>
                                     <ul>

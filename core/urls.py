@@ -13,6 +13,7 @@ urlpatterns = [
     path('about/', about, name='about'),
     path('contact/', contact, name='contact'),
     path('accounts/', include('allauth.urls')),
+    path('profiles/', include('main_apps.profiles.urls')),
     path('gestion/', include('main_apps.gestion.urls')),
     path('client/', include('main_apps.client.urls')),
     path('location/', include('main_apps.gestion_location.urls')),

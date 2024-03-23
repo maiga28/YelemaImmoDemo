@@ -6,8 +6,9 @@ from . models import Client
 from main_apps.gestion.models import Propriete,Proprietaire
 from . models import Reservation
 from .forms import ReservationForm, ClientForm,ClientUpdateForm
-
+from django.contrib.auth.decorators import login_required
 # Create your views here.
+@login_required
 def list_client(request):
     
     clients = Client.objects.all()
@@ -16,7 +17,7 @@ def list_client(request):
     }
     
     return render(request, 'client/list_client.html',context)
-
+@login_required
 def ajouter_client(request):
     if request.method == 'POST':    
         form = ClientForm(request.POST)
@@ -41,7 +42,7 @@ def ajouter_client(request):
     context = {'form': form}
     return render(request, 'client/ajouter_client.html', context)
 
-
+@login_required
 def update_client(request,client_id):
     client = get_object_or_404(Client,id=client_id)
     
@@ -54,7 +55,7 @@ def update_client(request,client_id):
         form = ClientUpdateForm()  # Remplir le formulaire avec les données existantes
 
     return render(request, 'client/update_client.html', context={'form': form})
-
+@login_required
 def supprimer_client(request):
     
     return render(request, 'client/supprimer_client.html')
@@ -73,7 +74,7 @@ from .models import Propriete, Reservation, Client
 from .forms import ReservationForm
 from django.contrib.auth.decorators import login_required
 
-
+@login_required
 def reservation(request, propriete_id):
     propriete = get_object_or_404(Propriete, pk=propriete_id)
 
@@ -115,6 +116,7 @@ def reservation(request, propriete_id):
 
     return render(request, 'client/reservation.html', context)
 
+@login_required
 def liste_reservation(request):
     
     reservations = Reservation.objects.all()

@@ -2,8 +2,9 @@ from django.shortcuts import render,redirect
 from .forms import LocateurForm
 from . models import Locateur
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
 # Create your views here.
-
+@login_required
 def gestion_locateur(request):
     locateurs = Locateur.objects.all()
     
@@ -13,17 +14,17 @@ def lien_conf(request):
     
     return render(request,'locateur/lien_conf.html')
 
-
+@login_required
 def ajouter_locateur(request):
     if request.method == 'POST':
         form = LocateurForm()
         if form.is_valid():
             
             name = form.cleaned_data['name']
-            prenom = form.cleaned_data['name']
-            tell = form.cleaned_data['name']
-            statut = form.cleaned_data['name']
-            email = form.cleaned_data['name']
+            prenom = form.cleaned_data['prenom']
+            tell = form.cleaned_data['tell']
+            statut = form.cleaned_data['statut']
+            email = form.cleaned_data['email']
             
             locateur, created = Locateur.objects.get_or_create(
                 email=email,

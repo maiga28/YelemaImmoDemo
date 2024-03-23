@@ -49,7 +49,7 @@ from .forms import ProprietaireForm
 from django.shortcuts import redirect, render
 from .forms import ProprietaireForm
 from .models import Proprietaire
-
+@login_required
 def ajouter_proprietaire(request):
     if request.method == "POST":
         form = ProprietaireForm(request.POST)
@@ -76,7 +76,7 @@ def ajouter_proprietaire(request):
     context = {'form': form}
     return render(request, 'gestion/ajouter_proprietaire.html', context)
 
-
+@login_required
 def liste_proprietaires(request):
     
     proprietaires = Proprietaire.objects.all()
@@ -93,7 +93,7 @@ def liste_proprietaires(request):
 from django.shortcuts import render, get_object_or_404
 from .forms import ProprietaireForm
 from .models import Proprietaire
-
+@login_required
 def update_proprietaire(request, proprietaire_id):
     proprietaire = get_object_or_404(Proprietaire, id=proprietaire_id)
     
@@ -107,7 +107,7 @@ def update_proprietaire(request, proprietaire_id):
 
     return render(request, 'gestion/update_proprietaire.html', context={'form': form})
 
-
+@login_required
 def supprimer_proprietaire(request, proprietaire_id):
     proprietaire = get_object_or_404(Proprietaire, id=proprietaire_id)
     
@@ -122,7 +122,7 @@ def supprimer_proprietaire(request, proprietaire_id):
 from django.shortcuts import render, redirect
 from .forms import ProprieteForm
 from .models import Propriete
-
+@login_required
 def ajouter_propriete(request):
     if request.method == 'POST':    
         form = ProprieteForm(request.POST)
@@ -165,6 +165,7 @@ def ajouter_propriete(request):
     context = {'form': form}
     return render(request, 'gestion/ajouter_propriete.html', context)
 ################################ Update propriete ##################################################################
+@login_required
 def update_propriete(request, propriete_id):
     propriete = get_object_or_404(Propriete, id=propriete_id)
     
@@ -177,7 +178,7 @@ def update_propriete(request, propriete_id):
         form = ProprieteForm()  # Remplir le formulaire avec les données existantes
 
     return render(request, 'gestion/update_propriete.html', context={'form': form})
-
+@login_required
 def supprimer_propriete(request, propriete_id):
     propriete = get_object_or_404(Propriete, id=propriete_id)
     
@@ -187,10 +188,10 @@ def supprimer_propriete(request, propriete_id):
     
     return render(request, 'gestion/supprimer_propriete.html', context={'propriete': propriete})
 
-
+@login_required
 def details_list(request, propriete_id):
     propriete = get_object_or_404(Propriete, id=propriete_id)
     return render(request, 'gestion/details_list.html', {'propriete': propriete})
-
+@login_required
 def list_users(request):
     return render(request,'gestion/list_users.html')
