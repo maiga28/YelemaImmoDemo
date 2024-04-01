@@ -1,26 +1,34 @@
-from django.db import models
 import random
-from string import ascii_lowercase as lets
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
+from django.db import models
+from django.conf import settings
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.contrib.auth.models import User, Group, Permission
+from main_apps.profiles.models import CustomUser
+from django.conf import settings
+from django.db import models
 
-# Create your models here.
 class Proprietaire(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    name = models.CharField(max_length=45)
-    s_name = models.CharField(max_length=45)
-    image = models.ImageField(upload_to='image/')
+    custom_user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     adresse = models.CharField(max_length=30)
-    numero_telephone = models.CharField(max_length=15)
-    email = models.EmailField(unique=True)
 
     def __str__(self):
-        return f"{self.name} {self.s_name}"
+        return f"{self.custom_user.username} - Proprietaire"
 
+    class Meta:
+        verbose_name = "Proprietaire"
+        verbose_name_plural = "Proprietaires"
+        
+    @property
+    def email(self):
+        return self.custom_user.email
+
+####################################
 class ProprieteManager(models.Manager):
-    
     def disponible(self):
         return self.get_queryset().filter(statut='disponible')
-    
+
     def indisponible(self):
         return self.get_queryset().filter(statut='indisponible')
     
@@ -68,3 +76,17 @@ class Contrat_bail(models.Model):
     debut = models.DateTimeField(auto_now_add=True)
     fin = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+class RecentActivity(models.Model):
+    proprietaire = models.ForeignKey(Proprietaire, on_delete=models.CASCADE)  # Utiliser 'proprietaire' au lieu de 'Proprietaire'
+    action = models.CharField(max_length=100)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-timestamp']
+
+    
+    
+
+
+

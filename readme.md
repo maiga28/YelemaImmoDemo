@@ -55,7 +55,8 @@ L'application Yelema Immo sera développée en utilisant les technologies suivan
    python manage.py migrate
    
 3. **Lancer le Serveur de Développement**
-   ```bash npx tailwindcss -i ./static/src/input.css -o ./static/src/output.css --watch
+   <!-- ```bash npx tailwindcss -i ./static/src/input.css -o ./static/src/output.css --watch  -->
+   <!-- ./manage.py graph_models -a -o assegai.png -->
    python manage.py runserver
 # YelemaImmoDemo-1.1
 #BY SIDI MOHAMED ALKAIROU MAIGA

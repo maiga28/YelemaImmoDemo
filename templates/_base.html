@@ -64,6 +64,68 @@
       }
     </script> 
 </head>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta charset="utf-8">
+    <meta name="robots" content="max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+    <link rel="canonical" href="https://preline.co/">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="This is a simple application layout with header only example using Tailwind CSS.">
+  
+    <meta name="twitter:site" content="@preline">
+    <meta name="twitter:creator" content="@htmlstream">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Dark Application Layout Navbar/Header using Tailwind CSS | Preline UI, crafted with Tailwind CSS">
+    <meta name="twitter:description" content="This is a simple application layout with header only example using Tailwind CSS.">
+    <meta name="twitter:image" content="{% static 'src/img/og-image.png'%}%">
+  
+    <meta property="og:url" content="https://preline.co/">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Preline">
+    <meta property="og:title" content="Dark Application Layout Navbar/Header using Tailwind CSS | Preline UI, crafted with Tailwind CSS">
+    <meta property="og:description" content="This is a simple application layout with header only example using Tailwind CSS.">
+    <meta property="og:image" content="{% static 'src/img/og-image.png'%}">
+  
+    <!-- Title -->
+    <title>Yelema | Immob </title>
+  
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="../../favicon.ico">
+  
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+
+    <link rel="stylesheet" href="{% static 'src/css/style.css' %}">
+    <link href="{% static 'src/css/vendors/flatpickr.min.css' %}">
+    <link href="{% static 'src/js/vendors/alpinejs.min.js' %}">
+    <link href="{% static 'src/js/main.js' %}">
+    
+    {% compress css %}
+
+    <link rel="stylesheet" href="{% static 'src/output.css' %}">
+    <link rel="stylesheet" href="{% static 'src/input.css' %}">
+    <link rel="stylesheet" href="{% static 'src/style.css' %}">
+  
+    {% endcompress %}
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="node_modules/preline/dist/preline.js"></script>
+    <script>
+      if (localStorage.getItem('dark-mode') === 'false' || !('dark-mode' in localStorage)) {
+          document.querySelector('html').classList.remove('dark');
+          document.querySelector('html').style.colorScheme = 'light';
+      } else {
+          document.querySelector('html').classList.add('dark');
+          document.querySelector('html').style.colorScheme = 'dark';
+      }
+    </script> 
+</head>
 
 <body class="dark:text-slate-400 c3jt4 c6w4h c6vqo c0ndv csf1w" :class="{ 'sidebar-expanded': sidebarExpanded }" x-data="{ sidebarOpen: false, sidebarExpanded: localStorage.getItem('sidebar-expanded') == 'true' }" x-init="$watch('sidebarExpanded', value => localStorage.setItem('sidebar-expanded', value))">
 
@@ -84,7 +146,7 @@
                 <div class="clpyc cj3hv c9r0z">
                     <div class="flex items-center cmgwo c2643 ciqso">
 
-                        {% comment %} <!-- Header: Left side -->
+                        <!-- Header: Left side -->
                         <div class="flex">
                             <!-- Hamburger button -->
                             <button class="text-slate-500 cxc4n caqfm" @click.stop="sidebarOpen = !sidebarOpen" aria-controls="sidebar" :aria-expanded="sidebarOpen">
@@ -96,7 +158,7 @@
                                 </svg>
                             </button>
 
-                        </div> {% endcomment %}
+                        </div>
 
                         <!-- Header: Right side -->
                         <div class="flex items-center cb7d8">
@@ -210,7 +272,7 @@
                                     </div>
                                 </div>                    
                             </div>
-                            {{user.username}}
+                                <a href='{% url "profiles:profile_view" user_id=user.id %}'>{{ user.username }}</a>
                             <!-- Notifications button -->
                             <div class="inline-flex c4ijw" x-data="{ open: false }">
                                 <button class="flex items-center justify-center rounded-full cu2ps cefxi ce4zx c6vqo chmgx c6dxj" :class="{ 'cr58u': open }" aria-haspopup="true" @click.prevent="open = !open" :aria-expanded="open">

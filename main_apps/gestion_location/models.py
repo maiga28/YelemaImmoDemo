@@ -34,3 +34,13 @@ class Employe(models.Model):
         content_type = ContentType.objects.get_for_model(Locateur)  # Assurez-vous de remplacer 'Locateur' par le vrai nom de votre modèle
         permission_codename = 'can_CRUD_locateur'
         return self.user_auth.has_perm(permission_codename, content_type)
+
+class RecentActivity(models.Model):
+    Employe = models.ForeignKey(Employe, on_delete=models.CASCADE)
+    action = models.CharField(max_length=100)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-timestamp']
+
+

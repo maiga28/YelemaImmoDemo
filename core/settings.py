@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
+from django.conf.global_settings import LOGOUT_REDIRECT_URL
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -38,9 +39,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'compressor',
     'main_apps.client',
-    'main_apps.gestion',
+    'main_apps.gestion.apps.GestionConfig',
     'main_apps.locateur',
     'main_apps.gestion_location',
+    'main_apps.settings',
+    'main_apps.profiles',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -50,8 +53,11 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.trello',
     'allauth.socialaccount.providers.facebook',
     'crispy_forms',
-    'main_apps.settings',
-    'main_apps.profiles',
+
+]
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
 MIDDLEWARE = [
@@ -186,19 +192,33 @@ STATICFILES_FINDERS = [
     'compressor.finders.CompressorFinder',
 ]
 
-# Utilisez le backend SMTP
+#######################################################
+#                   ################
+ 
+# Configuration de django-allauth
+ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
+ACCOUNT_LOGOUT_ON_PASSWORD_CHANGE = True
+
+# Configuration SMTP pour l'envoi d'e-mails
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-
-# Configuration SMTP pour Gmail
 EMAIL_HOST = 'smtp.gmail.com'
-
-# settings.py
 EMAIL_PORT = 465
-EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
-
-EMAIL_HOST_USER = 'tdjangosite@gmail.com'
-EMAIL_HOST_PASSWORD = 'qhhb xfdd dbhb zemx '
+EMAIL_HOST_USER = 'sidimaiga.work@gmail.com'
+EMAIL_HOST_PASSWORD = 'kcvq xeof uiyu skgc'
 
 LOGIN_REDIRECT_URL = '/gestion/'
-# AUTH_USER_MODEL = 'profiles.Profile'
+LOGOUT_REDIRECT_URL = '/accounts/login/'
+SIGNUP_REDIRECT_URL = '/accounts/login/'
+AUTH_USER_MODEL = "gestion.Proprietaire"
+AUTH_USER_MODEL = 'profiles.CustomUser'
+
+
+#               #################
+
+# ################################################################
+
+

@@ -17,4 +17,15 @@ class Locateur(models.Model):
 class Signaler_panne(models.Model):
     titre = models.TextField(max_length=500,blank=False,null=False)
     locateur = models.OneToOneField(Locateur, on_delete=models.CASCADE, related_name='signaler_une_panne')
-    
+
+
+
+class RecentActivity(models.Model):
+    Locateur = models.ForeignKey(Locateur, on_delete=models.CASCADE)
+    action = models.CharField(max_length=100)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-timestamp']
+
+  

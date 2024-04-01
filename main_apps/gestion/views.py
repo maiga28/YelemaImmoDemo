@@ -9,9 +9,32 @@ from .models import Proprietaire, Propriete
 from main_apps.client.models import Client,Reservation
 from datetime import datetime
 from django.contrib.auth.decorators import login_required
+from .models import RecentActivity
+from main_apps.profiles.models import CustomUser
+
+from django.contrib.sessions.models import Session
+from django.contrib.auth.models import User
+from django.utils import timezone
 
 @login_required
 def home(request):
+    
+    # Récupérer toutes les sessions actives
+    active_sessions = Session.objects.filter(expire_date__gte=timezone.now())
+
+    # Obtenir les IDs des utilisateurs connectés à partir des sessions actives
+    user_ids = []
+
+    for session in active_sessions:
+        decoded_session = session.get_decoded()
+        user_id = decoded_session.get('_profiles_customuser_id')
+        if user_id:
+            user_ids.append(int(user_id))
+
+    # Récupérer les utilisateurs connectés en fonction de leurs IDs
+    logged_in_users = CustomUser.objects.filter(id__in=user_ids)
+    
+    recent_activities = RecentActivity.objects.all().order_by('-timestamp')[:6] 
     proprietes = Propriete.objects.all()
     proprietaires = Proprietaire.objects.all()
     total_proprietaires = Proprietaire.objects.count()
@@ -29,52 +52,82 @@ def home(request):
     greeting = "Bonjour" if 6 <= hour < 12 else "Bonsoir"
 
     context = {
-        'proprietes':proprietes,
-        'proprietaires': page_obj,  # Utilisez page_obj au lieu de proprietaires ici
+        'logged_in_users': logged_in_users,
+        'proprietes': proprietes,
+        'proprietaires': page_obj,
         'total_proprietaires': total_proprietaires,
-        'total_proprietes':total_proprietes,
+        'total_proprietes': total_proprietes,
         'page_obj': page_obj,
-        'total_client':total_client,
-        'total_reservation':total_reservation,
-        'greeting' : greeting,
+        'total_client': total_client,
+        'total_reservation': total_reservation,
+        'greeting': greeting,
+        'recent_activities': recent_activities,
     }
 
     return render(request, 'gestion/home.html', context)
 
-
-################################### update # profile ####################################
-
-from .forms import ProprietaireForm
-
+########################################################################################
 from django.shortcuts import redirect, render
 from .forms import ProprietaireForm
-from .models import Proprietaire
+from .models import CustomUser, Proprietaire
+
 @login_required
 def ajouter_proprietaire(request):
     if request.method == "POST":
         form = ProprietaireForm(request.POST)
         if form.is_valid():
-            # Récupérez les données du formulaire
-            name = form.cleaned_data['name']
+            # Récupérer les données du formulaire
+            username = form.cleaned_data['username']
             s_name = form.cleaned_data['s_name']
             numero_telephone = form.cleaned_data['numero_telephone']
             adresse = form.cleaned_data['adresse']
             email = form.cleaned_data['email']
             
-            # Recherchez si un Proprietaire avec la même adresse e-mail existe déjà
-            proprietaire, created = Proprietaire.objects.get_or_create(email=email, defaults={
-                'name': name,
+            #Vérifier si l'utilisateur personnalisé existe déjà
+            custom_user, created = CustomUser.objects.get_or_create(email=email, defaults={
+                'username': username,
                 's_name': s_name,
-                'adresse': adresse,
                 'numero_telephone': numero_telephone
             })
 
+            # Créer le propriétaire associé au CustomUser
+            proprietaire, created = Proprietaire.objects.get_or_create(custom_user=custom_user, adresse=adresse)
             return redirect('gestion:home')
     else:
         form = ProprietaireForm()
 
     context = {'form': form}
     return render(request, 'gestion/ajouter_proprietaire.html', context)
+
+# ########################################################################################
+# @login_required
+# def ajouter_proprietaire(request):
+#     if request.method == "POST":
+#         form = ProprietaireForm(request.POST)
+#         if form.is_valid():
+#             # Récupérez les données du formulaire
+#             username = form.cleaned_data['username']
+#             s_name = form.cleaned_data['s_name']
+#             numero_telephone = form.cleaned_data['numero_telephone']
+#             adresse = form.cleaned_data['adresse']
+#             email = form.cleaned_data['email']
+            
+#             # Vérifiez si l'utilisateur personnalisé existe déjà
+#             custom_user, created = CustomUser.objects.get_or_create(email=email, defaults={
+            
+#                 'username': username,
+#                 's_name': s_name,
+#                 'numero_telephone': numero_telephone
+#             })
+
+#             # Créez le propriétaire associé au CustomUser
+#             proprietaire, created = Proprietaire.objects.get_or_create(custom_user=custom_user, adresse=adresse)
+#             return redirect('gestion:home')
+#     else:
+#         form = ProprietaireForm()
+
+#     context = {'form': form}
+#     return render(request, 'gestion/ajouter_proprietaire.html', context)
 
 @login_required
 def liste_proprietaires(request):
