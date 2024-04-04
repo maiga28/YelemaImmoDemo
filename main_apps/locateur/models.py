@@ -1,9 +1,10 @@
 from django.db import models
 from main_apps.gestion.models import Propriete, Contrat_bail
-
+from main_apps.profiles.models import CustomUser
 # Create your models here.
 
 class Locateur(models.Model):
+    custom_user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     name = models.CharField(max_length=30,blank=False,null=False)
     prenom = models.CharField(max_length=30,blank=False,null=False)
     tell = models.IntegerField(blank=False,null=False)

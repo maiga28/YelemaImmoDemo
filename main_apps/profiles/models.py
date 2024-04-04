@@ -10,7 +10,7 @@ class CustomUser(AbstractUser):
     date_of_birth = models.DateField(null=True, blank=True)
     phone_number = models.CharField(max_length=15, blank=True)
     location = models.CharField(max_length=100, blank=True)
-    profile_picture = models.ImageField(upload_to='profile_pics/', blank=True)
+    cover_picture = models.ImageField(upload_to='cover_picture/', blank=True)
 
     # Define the USERNAME_FIELD and REQUIRED_FIELDS
     USERNAME_FIELD = 'username'

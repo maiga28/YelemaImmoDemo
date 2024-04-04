@@ -10,7 +10,20 @@ module.exports = {
         extend: {},
     },
     plugins: [
-        require('flowbite/plugin'),
+        require('flowbite/plugin')({
+            charts: true,
+            forms: true,
+            tooltips: true
+        }),
+        require("@tailwindcss/forms")({
+            strategy: 'base', // only generate global styles
+            strategy: 'class', // only generate classes
+        }),
         require('preline/plugin'),
     ],
+
+    modules: {
+        grid: true,
+    },
+
 }

@@ -15,17 +15,15 @@ from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 from .signals import create_customer_profile
 
-
+@login_required
 def profile_view(request, user_id):
+    
     user = get_object_or_404(CustomUser, id=user_id)
-    if hasattr(request.user, 'proprietaire'):
-        proprietaire = request.user.proprietaire
-        recent_activities = RecentActivity.objects.filter(custom_user=request.user)
-    else:
-        recent_activities = None
+  
+    recent_activities = RecentActivity.objects.all().order_by('-timestamp')[:6]
 
     context = {
-        'profile': user,
+        'user': user,
         'recent_activities': recent_activities
     }
 
@@ -39,12 +37,12 @@ def profile_view(request, user_id):
 @login_required
 def edit_profile(request):
     if request.method == 'POST':
-        form = ProfileForm(request.POST, request.FILES, instance=request.user.profile)
+        form = ProfileForm(request.POST, request.FILES, instance=request.user)
         if form.is_valid():
             form.save()
-            return redirect('profiles:profile_view', id_user=request.user.id)  # Rediriger vers la vue de profil avec l'ID de l'utilisateur
+            return redirect('profiles:profile_view', id_user=request.user.id)  
     else:
-        form = ProfileForm(instance=request.user.profile)
+        form = ProfileForm(instance=request.user)
     return render(request, 'profiles/edit_profile.html', {'form': form})
 
 # Delete operation

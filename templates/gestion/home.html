@@ -437,42 +437,41 @@
                 <div class="cmue4">
                     <!-- Table -->
                     <div class="cjrun">
-<div class="cjrun">
-    <table class="ch1ih c07b2 c3ff8">
-        <!-- Table header -->
-        <thead class="rounded-sm ciz4v c1vyl ce4zx czgoy cn1je cw3n3 c0qeg">
-            <tr>
-                <th class="cnk1n">
-                    <div class="cqosy cojuf">Username</div>
-                </th>
-            </tr>
-        </thead>
-        <!-- Table body -->
-        <tbody class="text-sm ci5zp cz8yz cw92y cxw08">
-            <!-- Row -->
-            {% for user in logged_in_users %}
-            <tr>
-                <td class="cnk1n">
-                    <div class="flex items-center">
-                        <img class="rounded-full ccqvu ce4tq" src="{% static 'src/images/user-36-04.jpg' %}" width="36" height="36" alt="{{ user.username }}">
-                        <div class="cob4g">{{ user.username }}</div>
-                    </div>
-                </td>
-            </tr>
-            {% empty %}
-            <tr>
-                <td class="cnk1n">
-                    <div class="flex items-center">
-                        No logged in users.
-                    </div>
-                </td>
-            </tr>
-            {% endfor %}
-            <!-- End of Row -->
-        </tbody>
-    </table>
-</div>
-
+                        <div class="cjrun">
+                            <table class="ch1ih c07b2 c3ff8">
+                                <!-- Table header -->
+                                <thead class="rounded-sm ciz4v c1vyl ce4zx czgoy cn1je cw3n3 c0qeg">
+                                    <tr>
+                                        <th class="cnk1n">
+                                            <div class="cqosy cojuf">Username</div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <!-- Table body -->
+                                <tbody class="text-sm ci5zp cz8yz cw92y cxw08">
+                                    <!-- Row -->
+                                    {% for user in logged_in_users %}
+                                    <tr>
+                                        <td class="cnk1n">
+                                            <div class="flex items-center">
+                                                <img class="rounded-full ccqvu ce4tq" src="{{ user.profile_picture }}" width="36" height="36" alt="{{ user.username }}">
+                                                <div class="cob4g">{{ user.username }}</div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% empty %}
+                                    <tr>
+                                        <td class="cnk1n">
+                                            <div class="flex items-center">
+                                                No logged in users.
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                    <!-- End of Row -->
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -9,17 +9,14 @@ from django.contrib.auth.models import User
 def create_customer_profile(sender, instance, created, **kwargs):
     
     if created:
-        # Ajouter une activité récente pour indiquer la création d'un nouvel utilisateur
-        print (f"User {instance.id} created")
+        action = "Creation d'un nouveau profile"
     else:
-        # Ajouter une activité récente pour indiquer la mise à jour d'un utilisateur existant
-            # Ajoutez ici le code pour effectuer des actions avant que l'instance ne soit sauvegardée
-        print("CustomUser pre_save signal triggered.")
-        print("Instance:", instance)
+        action = 'Mise à jour du propriétaire'
+    RecentActivity.objects.create(custom_user=instance, action=action)
 
-@receiver(post_delete, sender=CustomUser)
+@receiver(post_delete, sender=RecentActivity)
 def delete_customer_profile(sender, instance, **kwargs):
-    instance.user.delete()
+    instance.custom_user.delete()
 
 @receiver(pre_save, sender=CustomUser)
 def custom_user_pre_save(sender, instance, **kwargs):
@@ -30,10 +27,4 @@ def custom_user_pre_save(sender, instance, **kwargs):
 # pre_delete signal
 @receiver(pre_delete, sender=CustomUser)
 def custom_user_pre_delete(sender, instance, **kwargs):
-    RecentActivity.objects.filter(CustomUser=instance).delete()
-    
-# post_delete signal
-@receiver(post_delete, sender=CustomUser)
-def custom_user_post_delete(sender, instance, **kwargs):
-    # Code to execute after deleting a CustomUser instance
-    print(f"L'utilisateur {instance.username} a été supprimé avec succès.")
+    RecentActivity.objects.get(CustomUser_id =instance).delete()

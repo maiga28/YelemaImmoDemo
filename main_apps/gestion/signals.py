@@ -5,9 +5,6 @@ from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 from .models import Proprietaire, RecentActivity,Contrat_bail
 
-
-
-
 # Signal pour enregistrer une activité récente lorsqu'un Proprietaire est créé ou mis à jour
 @receiver(post_save, sender=Proprietaire)
 def log_proprietaire_activity(sender, instance, created, **kwargs):

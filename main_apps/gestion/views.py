@@ -19,24 +19,20 @@ from django.utils import timezone
 @login_required
 def home(request):
     
-    # Récupérer toutes les sessions actives
-    active_sessions = Session.objects.filter(expire_date__gte=timezone.now())
+    # Récupérer toutes les sessions actives dans une liste de dictionnaires
+    sessions = Session.objects.filter(expire_date__gte=timezone.now())
+    
+    # Extraire les identifiants d'utilisateur de toutes les sessions actives
+    user_ids = [session.get_decoded().get('_auth_user_id') for session in sessions]
 
-    # Obtenir les IDs des utilisateurs connectés à partir des sessions actives
-    user_ids = []
-
-    for session in active_sessions:
-        decoded_session = session.get_decoded()
-        user_id = decoded_session.get('_profiles_customuser_id')
-        if user_id:
-            user_ids.append(int(user_id))
-
-    # Récupérer les utilisateurs connectés en fonction de leurs IDs
+    # Filtrer les utilisateurs uniques et récupérer leurs instances depuis la base de données
     logged_in_users = CustomUser.objects.filter(id__in=user_ids)
     
+    ###########################################################################
     recent_activities = RecentActivity.objects.all().order_by('-timestamp')[:6] 
     proprietes = Propriete.objects.all()
     proprietaires = Proprietaire.objects.all()
+    
     total_proprietaires = Proprietaire.objects.count()
     total_proprietes = Propriete.objects.count()
     total_client = Client.objects.count()
